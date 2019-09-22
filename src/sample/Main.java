@@ -4,6 +4,9 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.TransferMode;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.application.Application;
@@ -58,6 +61,37 @@ public class Main extends Application {
             button.setOnAction(event);
 
             VBox vbox = new VBox(30, label, button);
+
+            vbox.setOnDragOver(new EventHandler<DragEvent>() {
+
+                @Override
+                public void handle(DragEvent event) {
+                    if (event.getGestureSource() != vbox
+                            && event.getDragboard().hasFiles()) {
+                        /* allow for both copying and moving, whatever user chooses */
+                        event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+                    }
+                    event.consume();
+                }
+            });
+
+            vbox.setOnDragDropped(new EventHandler<DragEvent>() {
+
+                @Override
+                public void handle(DragEvent event) {
+                    Dragboard db = event.getDragboard();
+
+                    boolean success = false;
+                    if (db.hasFiles()) {
+                        label.setText(db.getFiles().get(0).getAbsolutePath()+ "  selected");
+                        success = true;
+                    }
+                    event.setDropCompleted(success);
+
+                    event.consume();
+                }
+            });
+
 
             vbox.setAlignment(Pos.CENTER);
 
