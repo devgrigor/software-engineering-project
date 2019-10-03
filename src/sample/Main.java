@@ -51,7 +51,7 @@ public class Main extends Application {
                             File file = fil_chooser.showOpenDialog(stage);
 
                             if (file != null) {
-
+                                System.out.println(file.getName());
                                 label.setText(file.getAbsolutePath()
                                         + "  selected");
                             }
