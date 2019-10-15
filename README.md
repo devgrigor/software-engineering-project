@@ -7,5 +7,4 @@
 ## Command for running project without ide
 
 ### cd src
-### javac sample/Main.java
-### java sample.main
+### $ javac -cp jars/tess4j-4.4.0.jar:jars/commons-collections-3.2.1.jar UI.java
