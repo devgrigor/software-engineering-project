@@ -1,4 +1,3 @@
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,68 +14,46 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
-import net.sourceforge.tess4j.*;
-
 public class UI extends Application {
 
+    public static void main(String[] args) {
+        launch(args);
+    }
 
+    public void start(Stage stage) throws Exception {
 
-    public void start(Stage stage) throws Exception
-    {
-
-
-        String PATH_TO_DATA="D:\\Downloads\\jar_files\\Data";
-        String LANGUAGE="hye";
-
-
-        ITesseract instance = new Tesseract();
-        instance.setDatapath(PATH_TO_DATA);
-        instance.setLanguage(LANGUAGE);
-
+        DataParser dp = new DataParser();
+        ExportModule em = new ExportModule();
         final TextArea textArea = new TextArea();
-
+        String outputPath = "C:/Users/Irina/Desktop/";
 
         stage.setTitle("OCReate");
 
         FileChooser fil_chooser = new FileChooser();
-
         Label label = new Label("no files selected");
-
         Button button = new Button("Select");
 
-        EventHandler<ActionEvent> event =
-                new EventHandler<ActionEvent>() {
+        EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
 
-                    public void handle(ActionEvent e)
-                    {
-                        File file = fil_chooser.showOpenDialog(stage);
+            public void handle(ActionEvent e) {
+                File file = fil_chooser.showOpenDialog(stage);
 
-                        if (file != null) {
+                if (file != null) {
 
-                            label.setText(file.getAbsolutePath()
-                                    + "  selected");
-                            Image image1 = new Image(file.toURI().toString());
-                            try {
-                                Object result = instance.doOCR(file);
-                                textArea.setText(result.toString());
-                            } catch (TesseractException exe) {
-                                System.err.println(exe.getMessage());
-                            }
-
-
-
-
-                        }
-                    }
-                };
+                    label.setText(file.getAbsolutePath()
+                            + "  selected");
+                    String result = dp.recognize(file);
+                    textArea.setText(result);
+                    //example of export
+                    //em.exportFile(result, "output", "doc", outputPath);
+                }
+            }
+        };
 
         button.setOnAction(event);
-
         VBox vbox = new VBox(30, label, button);
 
-
         vbox.setOnDragOver(new EventHandler<DragEvent>() {
-
             @Override
             public void handle(DragEvent event) {
                 if (event.getGestureSource() != vbox
@@ -95,17 +72,12 @@ public class UI extends Application {
                 Dragboard db = event.getDragboard();
 
                 boolean success = false;
+
                 if (db.hasFiles()) {
-                    label.setText(db.getFiles().get(0).getAbsolutePath()+ "  selected");
-
-                    try {
-                        Object result = instance.doOCR(db.getFiles().get(0));
-                        textArea.setText(result.toString());
-                    } catch (TesseractException exe) {
-                        System.err.println(exe.getMessage());
-                    }
-
-
+                    File file = db.getFiles().get(0);
+                    label.setText(file.getAbsolutePath() + "  selected");
+                    String result = dp.recognize(file);
+                    textArea.setText(result);
                     success = true;
                 }
                 /* let the source know whether the string was successfully
@@ -120,13 +92,8 @@ public class UI extends Application {
         Scene scene = new Scene(vbox, 800, 500);
 
         stage.setScene(scene);
-
         stage.show();
 
     }
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
+
