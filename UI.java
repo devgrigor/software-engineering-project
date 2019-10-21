@@ -16,31 +16,40 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.HashMap;
 
+/**
+ * A class that provides UI functionality and acts as a controller. Receives input from the user and processes it using
+ * DataParser. Outputs the result using ExportModule.
+ */
 public class UI extends Application {
 
-    public File file;
-    TextArea textArea;
-    DataParser dataParser;
-    FileChooser fileChooser;
-    FileChooser fileSaver;
-    ExportModule exportModule;
-    ObservableList<String> languages;
-    HashMap<String, String> languageNames = new HashMap<>();
-    ComboBox LanguageSelector;
+    public File file; //file to convert/output
+    TextArea textArea; //area to show the resulting text
+    DataParser dataParser; //class that performs an OCR
+    FileChooser fileChooser; //fileChooser for importing files
+    FileChooser fileSaver; //fileChooser for exporting files
+    ExportModule exportModule; //class to export the file in desired format
+    ObservableList<String> languages; //List of language names in the dropdown selector
+    HashMap<String, String> languageNames = new HashMap<>(); //map of language names and their short versions
+    ComboBox LanguageSelector; //Dropdown selector
 
     public UI() {
-
-
+        
         dataParser = new DataParser();
         textArea = new TextArea();
         fileChooser = new FileChooser();
         fileSaver = new FileChooser();
         exportModule = new ExportModule();
 
+        /**
+         * Add the supported output extensions to the file chooser
+         */
         fileSaver.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt"));
         fileSaver.getExtensionFilters().add(new FileChooser.ExtensionFilter("PDF (*.pdf)", "*.pdf"));
         fileSaver.getExtensionFilters().add(new FileChooser.ExtensionFilter("DOC (*.doc)", "*.doc"));
 
+        /**
+         * Add several sample languages to the list of supported languages. Will be done automatically by reading the contents of the Train Data folder in future
+         */
         languages =
                 FXCollections.observableArrayList(
                         "English",
@@ -55,8 +64,14 @@ public class UI extends Application {
         languageNames.put("Italian", "ita");
         languageNames.put("German", "deu");
 
+        /**
+         * set the first language in the drop down box as the default OCR language
+         */
         dataParser.setLanguage(languageNames.get(LanguageSelector.getValue() + ""));
 
+        /**
+         * If the language is changed in the drop down box, change the OCR language
+         */
         EventHandler<ActionEvent> languageChange =
                 new EventHandler<ActionEvent>() {
                     public void handle(ActionEvent e) {
@@ -64,10 +79,12 @@ public class UI extends Application {
                     }
                 };
 
+        /**
+         * set the path to the train data folder. Should be in the same directory as the running jar
+         */
         String path = (new File("").getAbsolutePath());
         path = path.replaceAll("%20", " ");
         path += "\\TrainData";
-
         dataParser.setPath(path);
     }
 
@@ -78,6 +95,9 @@ public class UI extends Application {
 
         Button selectButton = new Button("Select");
 
+        /**
+         * eventHandler allowing to select a file (input)
+         */
         EventHandler<ActionEvent> select =
                 new EventHandler<ActionEvent>() {
 
@@ -89,6 +109,9 @@ public class UI extends Application {
                             selectLabel.setText(file.getAbsolutePath()
                                     + "  selected");
 
+                            /**
+                             * Do OCR
+                             */
                             textArea.setText(dataParser.recognize(file));
 
                         }
@@ -97,6 +120,9 @@ public class UI extends Application {
 
         selectButton.setOnAction(select);
 
+        /**
+         * eventHandler allowing to export a file (output)
+         */
         Button exportButton = new Button("Export");
         EventHandler<ActionEvent> export =
                 new EventHandler<ActionEvent>() {
@@ -116,7 +142,9 @@ public class UI extends Application {
 
         exportButton.setOnAction(export);
 
-
+        /**
+         * put the UI elements in a vertical box, that can also take drag and drop input
+         */
         VBox vbox = new VBox(30, LanguageSelector, selectLabel, selectButton, exportButton);
 
         vbox.setOnDragOver(new EventHandler<DragEvent>() {
@@ -153,6 +181,9 @@ public class UI extends Application {
             }
         });
 
+        /**
+         * sample alignment and size, will be changed in future iterations
+         */
         vbox.setAlignment(Pos.CENTER);
         vbox.getChildren().add(textArea);
 
