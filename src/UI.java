@@ -25,7 +25,7 @@ public class UI extends Application {
         DataParser dp = new DataParser();
         ExportModule em = new ExportModule();
         final TextArea textArea = new TextArea();
-        String outputPath = "C:/Users/Irina/Desktop/";
+        String outputPath = "../";
 
         stage.setTitle("OCReate");
 
@@ -45,7 +45,7 @@ public class UI extends Application {
                     String result = dp.recognize(file);
                     textArea.setText(result);
                     //example of export
-                    //em.exportFile(result, "output", "doc", outputPath);
+                    em.exportFile(result, "output", "doc", outputPath);
                 }
             }
         };
