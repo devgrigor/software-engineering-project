@@ -13,4 +13,4 @@
 ## Command for tests
 ### cd src
 ### javac -cp ".;./jars/*" ParserTest.java
-### java -cp ".;./jars/*" ParserTest
+### java -cp ".;./jars/*" org.junit.runner.JUnitCore ParserTest
