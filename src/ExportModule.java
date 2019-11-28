@@ -9,7 +9,7 @@ public class ExportModule {
             return success;
         }
 
-        String pathname = path + name + "." + format;
+        String pathname = path;
         File file = new File(pathname);
         FileWriter fr = null;
         try {
