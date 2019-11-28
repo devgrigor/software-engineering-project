@@ -41,7 +41,7 @@ java -cp ".;./jars/*" org.junit.runner.JUnitCore ParserTest
 * [Tess4J](http://tess4j.sourceforge.net/) - A Java JNA wrapper for Tesseract OCR API
 
 ### Authors
-OCReate Team: Monika, Irina & Grigor
+OCReate Team: Grigor, Irina & Monika
 
 ### Acknowledgements
 Special thanks to Prof. Arpi Stepanyan for continous support
