@@ -1,0 +1,55 @@
+Afrikaans|afr
+Amharic|amh
+Arabic|ara
+Armenian|hye
+Assamese|asm
+Azerbaijani|aze
+Belarusian|bel
+Bengali|ben
+Bosnian|bos
+Breton|bre
+Bulgarian|bul
+Catalan, Valencian|cat
+Corsican|cos
+Croatian|hrv
+Czech|ces
+Danish|dan
+Divehi, Dhivehi, Maldivian|div
+Dzongkha|dzo
+English|eng
+Esperanto|epo
+Estonian|est
+Faroese|fao
+Finnish|fin
+French|fra
+Galician|glg
+Georgian|kat
+German|deu
+Greek, Modern (1453-)|ell
+Gujarati|guj
+Haitian, Haitian Creole|hat
+Hebrew|heb
+Hindi|hin
+Hungarian|hun
+Indonesian|ind
+Irish|gle
+Icelandic|isl
+Italian|ita
+Inuktitut|iku
+Japanese|jpn
+Japanese vertical|jpn_vert
+Javanese|jav
+Kannada|kan
+Kazakh|kaz
+Central Khmer|khm
+Kirghiz, Kyrgyz|kir
+Korean|kor
+Korean vertical|kor_vert
+Latin|lat
+Luxembourgish, Letzeburgesch|ltz
+Lao|lao
+Lithuanian|lit
+Latvian|lav
+Malayalam|mal
+Persian|fas
+Welsh|cym
