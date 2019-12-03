@@ -1,5 +1,8 @@
 import java.io.*;
 
+/**
+ * A class that exports the converted text in txt and doc formats
+ */
 public class ExportModule {
 
     public boolean exportFile(String text, String name, String format, String path) {
@@ -9,7 +12,7 @@ public class ExportModule {
             return success;
         }
 
-        String pathname = path + name + "." + format;
+        String pathname = path;
         File file = new File(pathname);
         FileWriter fr = null;
         try {
